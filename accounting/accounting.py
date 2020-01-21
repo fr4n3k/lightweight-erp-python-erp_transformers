@@ -173,6 +173,26 @@ def which_year_max(table):
         number
     """
 
+    set_of_years = set ()
+    for row in table: 
+        set_of_years.add(row[3])
+
+    dict_annual_profit = {}
+
+
+    for year in set_of_years:
+        profit = 0
+        for row in table:
+            if row[3] == year:
+                if row[4] == "in":
+                    profit += int(row[5])
+                elif row[4] == "out":
+                    profit -= int(row[5])
+            else:
+                pass
+        dict_annual_profit[year] =profit
+    print (max(zip(dict_annual_profit.values(), dict_annual_profit.keys())))
+
     # your code
 
 
