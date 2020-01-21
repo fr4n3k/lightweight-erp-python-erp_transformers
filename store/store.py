@@ -175,7 +175,6 @@ def get_counts_by_manufacturers(table):
     manufacturers_games_table =[]
     for manufacturer, num_of_games in manufacturers.items():
         manufacturers_games_table.append([manufacturer, str(num_of_games)])
-    print(manufacturers_games_table)
     ui.print_table(manufacturers_games_table, ['Manufacturers', 'amount of games'])
 
 
