@@ -168,6 +168,15 @@ def get_oldest_person(table):
     Returns:
         list: A list of strings (name or names if there are two more with the same value)
     """
+    
+    oldest_year = min([row[2] for row in table])
+    oldest_people = []
+    for row in table:
+        if row[2] == oldest_year:
+            oldest_people.append(row[1])
+        else:
+            pass
+    print(oldest_people)
 
     # your code
 
