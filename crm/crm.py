@@ -187,6 +187,14 @@ def get_subscribed_emails(table):
         Returns:
             list: list of strings (where a string is like "email;name")
         """
+    dict_subscribed_members = {}
+    for row in table:
+        if row[3] == "1":
+            dict_subscribed_members[row[2]] = row[1]
+        else:
+            pass
+    print(dict_subscribed_members)
+
 
     # your code
 
