@@ -152,7 +152,7 @@ def update(table, id_):
         if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
             updated_record = ui.get_inputs(['Month: ', 'Day: ', 'Year: ', 'in = income, out = outflow: ', 'Amount in USD: '], row)
             updated_record.insert(ID_LIST_INDEX, id_[ID_LIST_INDEX])
-            table[iterate] = updated_record
+            table[iterate] = updated_record # check if it could be 'row' instead of 'table[iterate]'
             data_manager.write_table_to_file(FILE_NAME, table)
             break
         iterate += 1
