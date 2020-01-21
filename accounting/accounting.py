@@ -3,9 +3,9 @@
 Data table structure:
     * id (string): Unique and random generated identifier
         at least 2 special characters (except: ';'), 2 number, 2 lower and 2 upper case letters)
-    * month (number): Month of the transaction
-    * day (number): Day of the transaction
-    * year (number): Year of the transaction
+    * month (number): Month
+    * day (number): Day
+    * year (number): Year
     * type (string): in = income, out = outflow
     * amount (int): amount of transaction in USD
 """
@@ -18,6 +18,7 @@ import data_manager
 # common module
 import common
 
+FILE_NAME = "accounting/items.csv"
 
 def start_module():
     """
@@ -46,32 +47,32 @@ def start_module():
 
 
 def show_table_wrapper():
-    table = data_manager.get_table_from_file('accounting/items.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     show_table(table)
 
 
 def add_wrapper():
-    table = data_manager.get_table_from_file('accounting/items.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     add(table)
 
 
 def remove_wrapper():
-    table = data_manager.get_table_from_file('accounting/items.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     remove(table, ui.get_inputs(['ID :'], 'Enter ID: '))
 
 
 def update_wrapper():
-    table = data_manager.get_table_from_file('accounting/items.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     update(table, ui.get_inputs(['ID :'], 'Enter ID: '))
 
 
 def which_year_max_wrapper():
-    table = data_manager.get_table_from_file('accounting/items.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     which_year_max(table)
 
 
 def avg_amount_wrapper():
-    table = data_manager.get_table_from_file('accounting/items.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     avg_amount(table, ui.get_inputs(['Year'], 'Enter a year: '))
 
 
@@ -87,7 +88,7 @@ def show_table(table):
     """
 
     # your code
-    titles_list = ['ID', 'Month of the transaction', 'Day of the transaction', 'Year of the transaction', 'in = income, out = outflow', 'Amount of transaction in USD']
+    titles_list = ['ID', 'Month', 'Day', 'Year', 'in = income, out = outflow', 'Amount of transaction in USD']
     ui.print_table(table, titles_list)
 
 
@@ -104,10 +105,10 @@ def add(table):
 
     # your code
     ID_INDEX = 0
-    record = ui.get_inputs(['Month of the transaction: ', 'Day of the transaction: ', 'Year of the transaction: ', 'in = income, out = outflow: ', 'Amount of transaction in USD: '], "Please insert data: ")
+    record = ui.get_inputs(['Month: ', 'Day: ', 'Year: ', 'in = income, out = outflow: ', 'Amount of transaction in USD: '], "Please insert data: ")
     record.insert(ID_INDEX, common.generate_random(table))
     table.append(record)
-    data_manager.write_table_to_file('accounting/items.csv', table)
+    data_manager.write_table_to_file(FILE_NAME, table)
     return table
 
 
@@ -128,7 +129,7 @@ def remove(table, id_):
     for row in table:
         if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
             table.remove(row)
-    data_manager.write_table_to_file('accounting/items.csv', table)
+    data_manager.write_table_to_file(FILE_NAME, table)
     return table
 
 
@@ -149,10 +150,10 @@ def update(table, id_):
     iterate = 0
     for row in table:
         if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
-            updated_record = ui.get_inputs(['Month of the transaction: ', 'Day of the transaction: ', 'Year of the transaction: ', 'in = income, out = outflow: ', 'Amount of transaction in USD: '], row)
+            updated_record = ui.get_inputs(['Month: ', 'Day: ', 'Year: ', 'in = income, out = outflow: ', 'Amount in USD: '], row)
             updated_record.insert(ID_LIST_INDEX, id_[ID_LIST_INDEX])
             table[iterate] = updated_record
-            data_manager.write_table_to_file('accounting/items.csv', table)
+            data_manager.write_table_to_file(FILE_NAME, table)
             break
         iterate += 1
     return table
