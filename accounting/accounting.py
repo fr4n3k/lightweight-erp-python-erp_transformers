@@ -207,7 +207,7 @@ def avg_amount(table, year):
     Returns:
         number
     """
-counter = 0
+    counter = 0
     profit = 0
 
     for row in table:
