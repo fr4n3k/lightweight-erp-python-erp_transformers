@@ -164,8 +164,15 @@ def get_longest_name_id(table):
             string: id of the longest name (if there are more than one, return
                 the last by alphabetical order of the names)
         """
+    max_length = (max([len(row[1]) for row in table]))
+    dict_longest_names = {}
+    for row in table:
+        if len(row[1]) == max_length:
+            dict_longest_names[row[0]] = row[1]
+        else:
+            pass
+    print(max(zip(dict_longest_names.values(), dict_longest_names.keys())))
 
-    # your code
 
 
 # the question: Which customers has subscribed to the newsletter?
@@ -180,6 +187,15 @@ def get_subscribed_emails(table):
         Returns:
             list: list of strings (where a string is like "email;name")
         """
+    dict_subscribed_members = {}
+    for row in table:
+        if row[3] == "1":
+            dict_subscribed_members[row[2]] = row[1]
+        else:
+            pass
+    
+    ui.print_result(dict_subscribed_members, "mail imie")
+
 
     # your code
 

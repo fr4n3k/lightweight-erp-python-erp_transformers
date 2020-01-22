@@ -42,8 +42,8 @@ def start_module():
                 '2': add_wrapper,
                 '3': remove_wrapper,
                 '4': update_wrapper,
-                '5': get_lowest_price_item_id,
-                '6': get_items_sold_between}
+                '5': get_lowest_price_item_id_wrapper,
+                '6': get_items_sold_between_wrapper}
     common.sub_menu(dict_menu, options, "Sales menu")
 
 
@@ -67,12 +67,12 @@ def update_wrapper():
     update(table, ui.get_inputs(['ID :'], 'Enter ID: '))
 
 
-def get_lowest_price_item_id():  # Need to be implemented
+def get_lowest_price_item_id_wrapper():  
     table = data_manager.get_table_from_file('sales/sales.csv')
     get_lowest_price_item_id(table)
 
 
-def get_items_sold_between():  # Need to be implemented
+def get_items_sold_between_wrapper():  # Need to be implemented
     table = data_manager.get_table_from_file('sales/sales.csv')
     get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
 
@@ -175,7 +175,14 @@ def get_lowest_price_item_id(table):
     Returns:
          string: id
     """
-
+    cheapest_price = min([row[2] for row in table])
+    dict_cheapest_products = {}
+    for row in table:
+        if row[2] == cheapest_price:
+            dict_cheapest_products[row[1]] = [row[2]]
+        else:
+            pass
+    print(min(dict_cheapest_products, key = dict_cheapest_products.get))
     # your code
 
 

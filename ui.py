@@ -1,6 +1,20 @@
 """ User Interface (UI) module """
 import data_manager
 
+
+def column_width_counter(label_list, table):
+    columns_width = []
+    for column in range(len(label_list)):
+        max = 0
+        for record in range(len(table)):
+            
+            if len(table[record][column]) >= max:
+                max = len(table[record][column])    
+            
+        columns_width.append(max)
+    return columns_width
+
+    
 def print_table(table, title_list):
     """
     Prints table with data.
@@ -21,69 +35,42 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-    dash_char = "-"
-    max_len_column = [0,0,0,0,0,0,0]
-    column_counter = 0
+    table.insert(0, title_list)
 
-    #maximum length of every element in title data base (max_len_column)
-    for rows in title_list:
-        if len(rows) > max_len_column[column_counter]:
-            max_len_column[column_counter] = len(rows)
-            column_counter += 1
+    # getting column width for a table
+    columns_width = column_width_counter(title_list, table)
 
-    #maximum Length of every row in table data base. (max_len_column)
-    for rows in table:
-        column_counter = 0
-        for column in rows:
-            if len(column) > max_len_column[column_counter]:
-                max_len_column[column_counter] = len(column)
-            column_counter += 1
+    edges_control = 1
+    table_width = len(columns_width) - edges_control
+    for item in columns_width:
+        table_width += item
 
-    #header
-    print("/",end = '')
-    counter = 0
-    for i in max_len_column:
-        if i != 0:
-            counter += 1
-            if counter == len(title_list):
-                print(f"{dash_char * (i + 1)}\\",end = '')
-            else:
-                print(f"{dash_char * (i + 1)}|",end = '')
-    print("")
+    break_line = '|'
+    for num in columns_width:
+        break_line += num*'-' + '|'
+
+    print('/' + "-" * table_width + '\\')
+    for position in table[:-1]:
+        print("|", end="")
+        for position_index, column in enumerate(position):
+            print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
+        print('')
+        print(break_line)
+    print("|", end="")
+    for position_index, column in enumerate(table[-1]):    
+        print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
+    print('\n' + '\\' + "-" * table_width + '/')
 
 
-    #title
-    counter = 0
-    for title in title_list:
-        print(f'| {title.center(max_len_column[counter])}', end = "")
-        counter += 1
-    print("|")
-
-    #data
-    for rows in table:
-        counter = 0
-        for i in max_len_column:
-            if i != 0:
-                print(f"|{dash_char * (i + 1)}", end = '')
-        print("|")
-        for column in rows:
-            print(f"| {column.center(max_len_column[counter])}", end = "")
-            counter += 1
-        print('|')
-
-    #footer
-    print("\\",end = '')
-    counter = 0
-    for i in max_len_column:
-        if i != 0:
-            counter += 1
-            if counter == len(title_list):
-                print(f"{dash_char * (i + 1)}/",end = '')
-            else:
-                print(f"{dash_char * (i + 1)}|",end = '')
+def change_dict_to_list(dictionary):
+    '''change dictionary into list'''
+    new_list = []
+    for key, value in dictionary.items():
+        new_list.append([key, value])
+    return new_list
 
 
-def print_result(result, label):
+def print_result(result, label:str):
     """
     Displays results of the special functions.
 
@@ -95,23 +82,18 @@ def print_result(result, label):
         None: This function doesn't return anything it only prints to console.
     """
 
-    # your code
+    list_label = label.split(' ')
     if type(result)==dict:
-        lista = result.items()
-        print(f"{label}")
-        for i in lista:
-            print(f"{i[0]} {i[1]}")
-            # print(list(my_dict))
+        list_from_dict = change_dict_to_list(result)
+        print_table(list_from_dict, list_label)
     if type(result)==str:
-        print(f"{label}")
-        print(f"string")
+        list_string = [result]
+        print_table(list_string, list_label)
     if type(result)==list:
-        print(f"{label}")
-        for single_list in result:
-            print(str(single_list).strip("()"))
+        print_table(result, list_label)
     if type(result)==int:
-        print(f"{label}")
-        print(f"{result}")
+        list_string = [str(result)]
+        print_table(list_string, list_label)
 
 
 def print_menu(title, list_options, exit_message):
