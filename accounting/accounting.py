@@ -207,5 +207,21 @@ def avg_amount(table, year):
     Returns:
         number
     """
+counter = 0
+    profit = 0
 
+    for row in table:
+        if int(year[0]) == int(row[3]):
+            counter += 1
+            if row[4] == "in":
+                profit += int(row[5])
+            elif row[4] == "out":
+                profit -= int(row[5])
+    if counter > 0:
+        avg = profit / counter
+    else:
+        avg =0
+    print (avg)
+    return avg
+    
     # your code
