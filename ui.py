@@ -82,7 +82,7 @@ def print_result(result, label:str):
         None: This function doesn't return anything it only prints to console.
     """
 
-    list_label = label.split(' ')
+    list_label = label.split(';')
     if type(result)==dict:
         list_from_dict = change_dict_to_list(result)
         print_table(list_from_dict, list_label)
