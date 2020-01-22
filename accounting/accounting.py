@@ -19,6 +19,10 @@ import data_manager
 import common
 
 FILE_NAME = "accounting/items.csv"
+ID_INDEX = 0
+YEAR_INDEX = 3
+INFLOW_OUTFLOW_INDEX = 4
+CASH_AMOUNT_INDEX = 5
 
 def start_module():
     """
@@ -103,8 +107,6 @@ def add(table):
         list: Table with a new record
     """
 
-    # your code
-    ID_INDEX = 0
     record = ui.get_inputs(['Month: ', 'Day: ', 'Year: ', 'in = income, out = outflow: ', 'Amount of transaction in USD: '], "Please insert data: ")
     record.insert(ID_INDEX, common.generate_random(table))
     table.append(record)
@@ -124,11 +126,9 @@ def remove(table, id_):
         list: Table without specified record.
     """
 
-    # your code
-    ID_LIST_INDEX = 0
-    for row in table:
-        if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
-            table.remove(row)
+    for year in table:
+        if year[ID_INDEX] == id_[ID_INDEX]:
+            table.remove(year)
     data_manager.write_table_to_file(FILE_NAME, table)
     return table
 
@@ -145,14 +145,12 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
-    ID_LIST_INDEX = 0
     iterate = 0
-    for row in table:
-        if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
-            updated_record = ui.get_inputs(['Month: ', 'Day: ', 'Year: ', 'in = income, out = outflow: ', 'Amount in USD: '], row)
-            updated_record.insert(ID_LIST_INDEX, id_[ID_LIST_INDEX])
-            table[iterate] = updated_record # check if it could be 'row' instead of 'table[iterate]'
+    for year in table:
+        if year[ID_INDEX] == id_[ID_INDEX]:
+            updated_record = ui.get_inputs(['Month: ', 'Day: ', 'Year: ', 'in = income, out = outflow: ', 'Amount in USD: '], year)
+            updated_record.insert(ID_INDEX, id_[ID_INDEX])
+            table[iterate] = updated_record # check if it could be 'year' instead of 'table[iterate]'
             data_manager.write_table_to_file(FILE_NAME, table)
             break
         iterate += 1
@@ -173,25 +171,25 @@ def which_year_max(table):
         number
     """
 
-    set_of_years = set ()
-    for row in table: 
-        set_of_years.add(row[3])
+    set_of_years = set()
+    for year in table: 
+        set_of_years.add(year[YEAR_INDEX])
 
     dict_annual_profit = {}
 
 
     for year in set_of_years:
         profit = 0
-        for row in table:
-            if row[3] == year:
-                if row[4] == "in":
-                    profit += int(row[5])
-                elif row[4] == "out":
-                    profit -= int(row[5])
+        for years in table:
+            if years[YEAR_INDEX] == year:
+                if years[INFLOW_OUTFLOW_INDEX] == "in":
+                    profit += int(years[CASH_AMOUNT_INDEX])
+                elif years[INFLOW_OUTFLOW_INDEX] == "out":
+                    profit -= int(years[CASH_AMOUNT_INDEX])
             else:
                 pass
-        dict_annual_profit[year] =profit
-    print (max(zip(dict_annual_profit.values(), dict_annual_profit.keys())))
+        dict_annual_profit[year] = profit
+    print(max(zip(dict_annual_profit.values(), dict_annual_profit.keys())))
 
     # your code
 
@@ -210,18 +208,17 @@ def avg_amount(table, year):
     counter = 0
     profit = 0
 
-    for row in table:
-        if int(year[0]) == int(row[3]):
+    for years in table:
+        if int(year[ID_INDEX]) == int(years[YEAR_INDEX]):
             counter += 1
-            if row[4] == "in":
-                profit += int(row[5])
-            elif row[4] == "out":
-                profit -= int(row[5])
+            if years[INFLOW_OUTFLOW_INDEX] == "in":
+                profit += int(years[CASH_AMOUNT_INDEX])
+            elif years[INFLOW_OUTFLOW_INDEX] == "out":
+                profit -= int(years[CASH_AMOUNT_INDEX])
     if counter > 0:
         avg = profit / counter
     else:
         avg =0
-    print (avg)
+    print(avg)
     return avg
-    
-    # your code
+

@@ -82,18 +82,18 @@ def print_result(result, label:str):
         None: This function doesn't return anything it only prints to console.
     """
 
-    list_label = label.split(' ')
     if type(result)==dict:
+        list_label = label.split(';')
         list_from_dict = change_dict_to_list(result)
         print_table(list_from_dict, list_label)
     if type(result)==str:
-        list_string = [result]
-        print_table(list_string, list_label)
+        print(label, list_string)
     if type(result)==list:
+        list_label = label.split(';')
         print_table(result, list_label)
-    if type(result)==int:
-        list_string = [str(result)]
-        print_table(list_string, list_label)
+    if type(result)==int or type(result)==float:
+        list_string = str(result)
+        print(label, list_string)
 
 
 def print_menu(title, list_options, exit_message):
