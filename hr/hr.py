@@ -193,3 +193,27 @@ def get_persons_closest_to_average(table):
     """
 
     # your code
+    NAME_INDEX = 1
+    AGE_INDEX = 2
+    counter = 0
+    total_year_of_birth = 0
+    persons_closest_to_average = []
+
+    for person in table:
+        counter +=1
+        total_year_of_birth += int(person[AGE_INDEX])
+    average_year_of_birth = total_year_of_birth/counter
+    print(average_year_of_birth) #test
+
+
+    closest_number_of_years_to_average = min([abs(int(person[AGE_INDEX])-average_year_of_birth) for person in table])
+    print(closest_number_of_years_to_average) #test
+    
+    for person in table:
+        if abs(int(person[AGE_INDEX])-average_year_of_birth) == closest_number_of_years_to_average:
+            persons_closest_to_average.append(person[NAME_INDEX])
+    print(persons_closest_to_average)
+    
+    return persons_closest_to_average
+
+
