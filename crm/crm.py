@@ -193,7 +193,8 @@ def get_subscribed_emails(table):
             dict_subscribed_members[row[2]] = row[1]
         else:
             pass
-    print(dict_subscribed_members)
+    
+    ui.print_result(dict_subscribed_members, ["mail", "imie"])
 
 
     # your code

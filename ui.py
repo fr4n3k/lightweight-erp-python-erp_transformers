@@ -61,6 +61,15 @@ def print_table(table, title_list):
         print("{0:^{1}}".format(column, columns_width[position_index]), end ="|")
     print('\n' + '\\' + "-" * table_width + '/')
 
+
+def change_dict_to_list(dictionary):
+    '''change dictionary into list'''
+    new_list = []
+    for key, value in dictionary.items():
+        new_list.append([key, value])
+    return new_list
+
+
 def print_result(result, label):
     """
     Displays results of the special functions.
@@ -75,13 +84,10 @@ def print_result(result, label):
 
     # your code
     if type(result)==dict:
-        lista = result.items()
-        print(f"{label}")
-        for i in lista:
-            print(f"{i[0]} {i[1]}")
-            # print(list(my_dict))
+        list_from_dict = change_dict_to_list(result)
+        print_table(list_from_dict, label)
     if type(result)==str:
-        print(f"{label}")
+        print(label)
         print(f"string")
     if type(result)==list:
         print(f"{label}")
