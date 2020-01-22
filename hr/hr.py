@@ -15,6 +15,10 @@ import data_manager
 # common module
 import common
 
+FILE_NAME = 'hr/persons.csv'
+ID_LIST_INDEX = 0
+NAME_INDEX = 1
+AGE_INDEX = 2
 
 def start_module():
     """
@@ -43,32 +47,32 @@ def start_module():
 
 
 def show_table_wrapper():
-    table = data_manager.get_table_from_file('hr/persons.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     show_table(table)
 
 
 def add_wrapper():
-    table = data_manager.get_table_from_file('hr/persons.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     add(table)
 
 
 def remove_wrapper():
-    table = data_manager.get_table_from_file('hr/persons.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     remove(table, ui.get_inputs(['ID :'], 'Enter ID: '))
 
 
 def update_wrapper():
-    table = data_manager.get_table_from_file('hr/persons.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     update(table, ui.get_inputs(['ID :'], 'Enter ID: '))
 
 
 def get_oldest_person_wrapper():
-    table = data_manager.get_table_from_file('hr/persons.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     get_oldest_person(table)
 
 
 def get_persons_closest_to_average_wrapper():
-    table = data_manager.get_table_from_file('hr/persons.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     get_persons_closest_to_average(table)
 
 
@@ -104,7 +108,7 @@ def add(table):
     record = ui.get_inputs(['Name: ', 'Birth year: '], "Please insert data: ")
     record.insert(ID_INDEX, common.generate_random(table))
     table.append(record)
-    data_manager.write_table_to_file('hr/persons.csv', table)
+    data_manager.write_table_to_file(FILE_NAME, table)
     return table
 
 
@@ -120,12 +124,10 @@ def remove(table, id_):
         list: Table without specified record.
     """
 
-    # your code
-    ID_LIST_INDEX = 0
-    for row in table:
-        if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
-            table.remove(row)
-    data_manager.write_table_to_file('hr/persons.csv', table)
+    for person in table:
+        if person[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
+            table.remove(person)
+    data_manager.write_table_to_file(FILE_NAME, table)
     return table
 
 
@@ -144,12 +146,12 @@ def update(table, id_):
     # your code
     ID_LIST_INDEX = 0
     iterate = 0
-    for row in table:
-        if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
-            updated_record = ui.get_inputs(['Name: ', 'Birth year: '], row)
+    for person in table:
+        if person[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
+            updated_record = ui.get_inputs(['Name: ', 'Birth year: '], person)
             updated_record.insert(ID_LIST_INDEX, id_[ID_LIST_INDEX])
             table[iterate] = updated_record
-            data_manager.write_table_to_file('hr/persons.csv', table)
+            data_manager.write_table_to_file(FILE_NAME, table)
             break
         iterate += 1
     return table
@@ -169,16 +171,16 @@ def get_oldest_person(table):
         list: A list of strings (name or names if there are two more with the same value)
     """
     
-    oldest_year = min([row[2] for row in table])
+    oldest_year = min([person[AGE_INDEX] for person in table])
     oldest_people = []
-    for row in table:
-        if row[2] == oldest_year:
-            oldest_people.append(row[1])
+    for person in table:
+        if person[AGE_INDEX] == oldest_year:
+            oldest_people.append(person[NAME_INDEX])
         else:
             pass
     print(oldest_people)
 
-    # your code
+
 
 
 def get_persons_closest_to_average(table):
@@ -192,9 +194,6 @@ def get_persons_closest_to_average(table):
         list: list of strings (name or names if there are two more with the same value)
     """
 
-    # your code
-    NAME_INDEX = 1
-    AGE_INDEX = 2
     counter = 0
     total_year_of_birth = 0
     persons_closest_to_average = []
@@ -203,12 +202,9 @@ def get_persons_closest_to_average(table):
         counter +=1
         total_year_of_birth += int(person[AGE_INDEX])
     average_year_of_birth = total_year_of_birth/counter
-    print(average_year_of_birth) #test
-
 
     closest_number_of_years_to_average = min([abs(int(person[AGE_INDEX])-average_year_of_birth) for person in table])
-    print(closest_number_of_years_to_average) #test
-    
+
     for person in table:
         if abs(int(person[AGE_INDEX])-average_year_of_birth) == closest_number_of_years_to_average:
             persons_closest_to_average.append(person[NAME_INDEX])
