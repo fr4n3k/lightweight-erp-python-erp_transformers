@@ -194,7 +194,7 @@ def get_subscribed_emails(table):
         else:
             pass
     
-    ui.print_result(dict_subscribed_members, ["mail", "imie"])
+    ui.print_result(dict_subscribed_members, "mail imie")
 
 
     # your code
