@@ -198,6 +198,7 @@ def get_persons_closest_to_average(table):
     total_year_of_birth = 0
     persons_closest_to_average = []
 
+    # enclose this loop in a new function
     for person in table:
         counter +=1
         total_year_of_birth += int(person[AGE_INDEX])
