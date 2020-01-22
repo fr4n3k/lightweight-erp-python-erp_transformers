@@ -181,6 +181,17 @@ def get_oldest_person(table):
     print(oldest_people)
 
 
+def get_average_year_of_birth(table_of_people):
+    '''returns the average year of birth for people in the table'''
+
+    counter = 0
+    total_year_of_birth = 0
+
+    for person in table_of_people:
+        counter +=1
+        total_year_of_birth += int(person[AGE_INDEX])
+    average_year_of_birth = total_year_of_birth/counter
+    return average_year_of_birth
 
 
 def get_persons_closest_to_average(table):
@@ -194,15 +205,8 @@ def get_persons_closest_to_average(table):
         list: list of strings (name or names if there are two more with the same value)
     """
 
-    counter = 0
-    total_year_of_birth = 0
     persons_closest_to_average = []
-
-    for person in table:
-        counter +=1
-        total_year_of_birth += int(person[AGE_INDEX])
-    average_year_of_birth = total_year_of_birth/counter
-
+    average_year_of_birth = get_average_year_of_birth(table)
     closest_number_of_years_to_average = min([abs(int(person[AGE_INDEX])-average_year_of_birth) for person in table])
 
     for person in table:
@@ -211,5 +215,3 @@ def get_persons_closest_to_average(table):
     print(persons_closest_to_average)
     
     return persons_closest_to_average
-
-
