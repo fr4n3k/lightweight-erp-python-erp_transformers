@@ -87,7 +87,6 @@ def show_table(table):
         None
     """
 
-    # your code
     titles_list = ['ID', 'name', 'birth_year']
     ui.print_table(table, titles_list)
 
@@ -103,7 +102,6 @@ def add(table):
         list: Table with a new record
     """
 
-    # your code
     ID_INDEX = 0
     record = ui.get_inputs(['Name: ', 'Birth year: '], "Please insert data: ")
     record.insert(ID_INDEX, common.generate_random(table))
@@ -143,7 +141,6 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
     ID_LIST_INDEX = 0
     iterate = 0
     for person in table:
@@ -207,7 +204,6 @@ def get_persons_closest_to_average(table):
 
     persons_closest_to_average = []
     average_year_of_birth = get_average_year_of_birth(table)
-    # enclose this loop in a new function
     closest_number_of_years_to_average = min([abs(int(person[AGE_INDEX])-average_year_of_birth) for person in table])
 
     for person in table:
