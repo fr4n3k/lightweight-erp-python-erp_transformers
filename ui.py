@@ -70,7 +70,7 @@ def change_dict_to_list(dictionary):
     return new_list
 
 
-def print_result(result, label):
+def print_result(result, label:str):
     """
     Displays results of the special functions.
 
@@ -87,13 +87,13 @@ def print_result(result, label):
         list_from_dict = change_dict_to_list(result)
         print_table(list_from_dict, list_label)
     if type(result)==str:
-        print(list_label)
-        print(f"string")
+        list_string = [result]
+        print_table(list_string, list_label)
     if type(result)==list:
         print_table(result, list_label)
     if type(result)==int:
-        print(f"{list_label}")
-        print(f"{result}")
+        list_string = [str(result)]
+        print_table(list_string, list_label)
 
 
 def print_menu(title, list_options, exit_message):
