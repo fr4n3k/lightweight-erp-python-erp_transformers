@@ -195,7 +195,7 @@ def get_average_by_manufacturer(table, manufacturer):
     all_games_in_stock = 0
     number_of_games = 0
     for game in table:
-        if game[MANUFACTURER] == manufacturer:
+        if game[MANUFACTURER] == manufacturer[0]:
             number_of_games += 1
             all_games_in_stock += int(game[IN_STOCK])
     average_games_amount = all_games_in_stock / number_of_games

@@ -184,6 +184,7 @@ def get_average_durability_by_manufacturers(table):
     Returns:
         dict: a dictionary with this structure: { [manufacturer] : [avg] }
     """
+
     MANUFACTURER = 2
     DURABILITY = 4
     avg_durability = {}
@@ -194,3 +195,4 @@ def get_average_durability_by_manufacturers(table):
         result = sum(v)//len(v)
         avg_durability[k] = result
     return avg_durability
+    ui.print_result
