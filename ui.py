@@ -90,9 +90,7 @@ def print_result(result, label):
         print(label)
         print(f"string")
     if type(result)==list:
-        print(f"{label}")
-        for single_list in result:
-            print(str(single_list).strip("()"))
+        print_table(result, label)
     if type(result)==int:
         print(f"{label}")
         print(f"{result}")
