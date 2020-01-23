@@ -63,6 +63,9 @@ def get_the_last_buyer_name():
 
     # find the _customer_id_ of the last sale in _sales_
     # find the _name_ of the given _customer_id_ as _id_ in _crm_
+    last_buyer_id = 
+    last_buyer_name = crm.get_name_by_id(last_buyer_name)
+    return last_buyer_name
 
 def get_the_last_buyer_id():
     """
@@ -85,7 +88,9 @@ def get_the_buyer_name_spent_most_and_the_money_spent():
 
     # find the _customer_id_ who spent most in _sales_
     # find the _name_ of the given _customer_id_ as _id_ in _crm_
-
+    biggest_spender_id = 
+    biggest_spender_name = crm.get_name_by_id(biggest_spender_id)
+    return last_buyer_name
 
 def get_the_buyer_id_spent_most_and_the_money_spent():
     """
@@ -113,7 +118,9 @@ def get_the_most_frequent_buyers_names(num=1):
     
     # find the _customer_id_ who is the most frequent buyer in _sales_
     # find the _name_ of the given _customer_id_ as _id_ in _crm_
-
+    most_frequent_buyer_id = 
+    most_frequent_buyer_name = crm.get_name_by_id(most_frequent_buyer_id)
+    return last_buyer_name
 
 def get_the_most_frequent_buyers_ids(num=1):
     """
