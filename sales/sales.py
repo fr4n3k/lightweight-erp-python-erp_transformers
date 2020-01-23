@@ -18,7 +18,16 @@ import ui
 import data_manager
 # common module
 import common
+#date module
+from datetime import date
 
+FILE_NAME = 'sales/sales.csv'
+ID_LIST_INDEX = 0
+GAME_NAME_INDEX = 1
+GAME_PRICE_INDEX = 2
+SALE_MONTH_INDEX = 3
+SALE_DAY_INDEX = 4
+SALE_YEAR_INDEX = 5
 
 def start_module():
     """
@@ -48,36 +57,43 @@ def start_module():
 
 
 def show_table_wrapper():
-    table = data_manager.get_table_from_file('sales/sales.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     show_table(table)
 
 
 def add_wrapper():
-    table = data_manager.get_table_from_file('sales/sales.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     add(table)
 
 
 def remove_wrapper():
-    table = data_manager.get_table_from_file('sales/sales.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     remove(table, ui.get_inputs(['ID :'], 'Enter ID: '))
 
 
 def update_wrapper():
-    table = data_manager.get_table_from_file('sales/sales.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     update(table, ui.get_inputs(['ID :'], 'Enter ID: '))
 
 
 def get_lowest_price_item_id_wrapper():  
-    table = data_manager.get_table_from_file('sales/sales.csv')
+    table = data_manager.get_table_from_file(FILE_NAME)
     get_lowest_price_item_id(table)
 
 
-def get_items_sold_between_wrapper():  # Need to be implemented
-    table = data_manager.get_table_from_file('sales/sales.csv')
-    get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
-
+def get_items_sold_between_wrapper():  
+    table = data_manager.get_table_from_file(FILE_NAME)
+    # check if input is intiger
+    try:
+        month_from, day_from, year_from, month_to, day_to, year_to = ui.get_inputs(['Month from :', 'Day from :','Year from :', 'Month to :', 'Day to :','Year to :'], 'Enter the dates: ' )
+        int(month_from) and int(day_from) and  int(year_from) and int(month_to) and int(day_to) and int(year_to)
+        get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+    except:
+        ui.print_error_message("Value Error. Please provide a correct date format")
+        get_items_sold_between_wrapper()
 
 def show_table(table):
+
     """
     Display a table
 
@@ -88,7 +104,6 @@ def show_table(table):
         None
     """
 
-    # your code
     titles_list = ['ID', 'title', 'price', 'month', 'day', 'year']
     ui.print_table(table, titles_list)
 
@@ -104,12 +119,10 @@ def add(table):
         list: Table with a new record
     """
 
-    # your code
-    ID_INDEX = 0
     record = ui.get_inputs(['title: ', 'price: ','month: ', 'day: ', 'year: '], "Please insert data: ")
     record.insert(ID_INDEX, common.generate_random(table))
     table.append(record)
-    data_manager.write_table_to_file('sales/sales.csv', table)
+    data_manager.write_table_to_file(FILE_NAME, table)
     return table
 
 
@@ -125,12 +138,10 @@ def remove(table, id_):
         list: Table without specified record.
     """
 
-    # your code
-    ID_LIST_INDEX = 0
     for row in table:
         if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
             table.remove(row)
-    data_manager.write_table_to_file('sales/sales.csv', table)
+    data_manager.write_table_to_file(FILE_NAME, table)
     return table
 
 
@@ -146,15 +157,13 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
-    ID_LIST_INDEX = 0
     iterate = 0
     for row in table:
         if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
             updated_record = ui.get_inputs(['title: ', 'price: ', 'month: ', 'day: ', 'year: '], row)
             updated_record.insert(ID_LIST_INDEX, id_[ID_LIST_INDEX])
             table[iterate] = updated_record
-            data_manager.write_table_to_file('sales/sales.csv', table)
+            data_manager.write_table_to_file(FILE_NAME, table)
             break
         iterate += 1
     return table
@@ -175,11 +184,11 @@ def get_lowest_price_item_id(table):
     Returns:
          string: id
     """
-    cheapest_price = min([row[2] for row in table])
+    cheapest_price = min([row[GAME_PRICE_INDEX] for row in table])
     dict_cheapest_products = {}
     for row in table:
-        if row[2] == cheapest_price:
-            dict_cheapest_products[row[1]] = [row[2]]
+        if row[GAME_PRICE_INDEX] == cheapest_price:
+            dict_cheapest_products[row[GAME_NAME_INDEX]] = [row[GAME_PRICE_INDEX]]
         else:
             pass
     print(min(dict_cheapest_products, key = dict_cheapest_products.get))
@@ -202,8 +211,28 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
     Returns:
         list: list of lists (the filtered table)
     """
+    filtered_table = []
+    
+    date_from = date(int(year_from),int(month_from),int(day_from))
+    date_to = date(int(year_to),int(month_to),int(day_to))
 
-    # your code
+    #logic check
+    if date_to<date_from:
+        message = "\nLogic error. End date precedes the start date"
+        ui.print_error_message(message)
+        get_items_sold_between_wrapper()
+    else:
+        pass
+
+    for row in table:
+        date_of_sale = date(int(row[SALE_YEAR_INDEX]),int(row[SALE_MONTH_INDEX]),int(row[SALE_DAY_INDEX]))
+        if date_from<=date_of_sale<=date_to:
+            filtered_table.append(row)
+        else:
+            pass
+    label = 'ID;Title;Price;Month;Day;Year;Customer ID'
+    ui.print_result(filtered_table, label)
+
 
 
 # functions supports data abalyser
