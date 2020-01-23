@@ -24,9 +24,32 @@ def start_module():
     Returns:
         None
     """
+    options = ['get last buyer name',
+                'get last buyer id',
+                'get the name of the top buyer with amount of money spent',
+                'get the id of the top buyer with amount of money spent',
+                'get the name of the most frequent buyer',
+                'get the id of the most frequent buyer']
+    dict_menu = {'1': get_the_last_buyer_name_wrapper,
+                '2': get_the_last_buyer_id_wrapper,
+                '3': get_the_buyer_name_spent_most_and_the_money_spent_wrapper,
+                '4': get_the_buyer_id_spent_most_and_the_money_spent_wrapper,
+                '5': get_the_most_frequent_buyers_names_wrapper,
+                '6': get_the_most_frequent_buyers_ids_wrapper}
+    common.sub_menu(dict_menu, options, "Store menu")
 
-    # your code
 
+def get_the_last_buyer_name_wrapper():
+    pass
+def get_the_last_buyer_id_wrapper():
+    pass
+def get_the_buyer_name_spent_most_and_the_money_spent_wrapper():
+    pass
+def get_the_buyer_id_spent_most_and_the_money_spent_wrapper():
+    pass
+def get_the_most_frequent_buyers_names_wrapper():
+    pass
+def get_the_most_frequent_buyers_ids_wrapper():
     pass
 
 
@@ -38,8 +61,8 @@ def get_the_last_buyer_name():
         str: Customer name of the last buyer
     """
 
-    # your code
-
+    # find the _customer_id_ of the last sale in _sales_
+    # find the _name_ of the given _customer_id_ as _id_ in _crm_
 
 def get_the_last_buyer_id():
     """
@@ -49,7 +72,7 @@ def get_the_last_buyer_id():
         str: Customer id of the last buyer
     """
 
-    # your code
+    # find the _customer_id_ of the last sale in _sales_
 
 
 def get_the_buyer_name_spent_most_and_the_money_spent():
@@ -60,7 +83,8 @@ def get_the_buyer_name_spent_most_and_the_money_spent():
         tuple: Tuple of customer name and the sum the customer spent eg.: ('Daniele Coach', 42)
     """
 
-    # your code
+    # find the _customer_id_ who spent most in _sales_
+    # find the _name_ of the given _customer_id_ as _id_ in _crm_
 
 
 def get_the_buyer_id_spent_most_and_the_money_spent():
@@ -71,7 +95,7 @@ def get_the_buyer_id_spent_most_and_the_money_spent():
         tuple: Tuple of customer id and the sum the customer spent eg.: (aH34Jq#&, 42)
     """
 
-    # your code
+    # find the _customer_id_ who spent most in _sales_
 
 
 def get_the_most_frequent_buyers_names(num=1):
@@ -86,8 +110,9 @@ def get_the_most_frequent_buyers_names(num=1):
         list of tuples: Ordered list of tuples of customer names and num of sales
             The first one bought the most frequent. eg.: [('Genoveva Dingess', 8), ('Missy Stoney', 3)]
     """
-
-    # your code
+    
+    # find the _customer_id_ who is the most frequent buyer in _sales_
+    # find the _name_ of the given _customer_id_ as _id_ in _crm_
 
 
 def get_the_most_frequent_buyers_ids(num=1):
@@ -103,4 +128,4 @@ def get_the_most_frequent_buyers_ids(num=1):
             The first one bought the most frequent. eg.: [(aH34Jq#&, 8), (bH34Jq#&, 3)]
     """
 
-    # your code
+    # find the _customer_id_ who is the most frequent buyer in _sales_
