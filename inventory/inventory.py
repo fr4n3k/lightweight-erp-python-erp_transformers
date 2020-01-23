@@ -170,7 +170,6 @@ def get_available_items(table, year):
     for row in table:
         if int(row[YEAR_INDEX]) + int(row[DURABILITY]) < int(year[0]):
             available_item_list.append(row)
-    print(available_item_list)
     return available_item_list
 
 
@@ -185,6 +184,7 @@ def get_average_durability_by_manufacturers(table):
     Returns:
         dict: a dictionary with this structure: { [manufacturer] : [avg] }
     """
+
     MANUFACTURER = 2
     DURABILITY = 4
     avg_durability = {}
@@ -194,5 +194,4 @@ def get_average_durability_by_manufacturers(table):
     for k, v in avg_durability.items():
         result = sum(v)/len(v)
         avg_durability[k] = result
-    print (avg_durability)
     return avg_durability
