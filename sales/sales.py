@@ -22,7 +22,7 @@ import common
 from datetime import date
 
 FILE_NAME = 'sales/sales.csv'
-ID_LIST_INDEX = 0
+ID_INDEX = 0
 GAME_NAME_INDEX = 1
 GAME_PRICE_INDEX = 2
 SALE_MONTH_INDEX = 3
@@ -85,9 +85,9 @@ def get_items_sold_between_wrapper():
     table = data_manager.get_table_from_file(FILE_NAME)
     # check if input is intiger
     try:
-        month_from, day_from, year_from, month_to, day_to, year_to = ui.get_inputs(['Month from :', 'Day from :','Year from :', 'Month to :', 'Day to :','Year to :'], 'Enter the dates: ' )
-        int(month_from) and int(day_from) and  int(year_from) and int(month_to) and int(day_to) and int(year_to)
-        get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+        dates = ui.get_inputs(['Month from :', 'Day from :','Year from :', 'Month to :', 'Day to :','Year to :'], 'Enter the filtering dates. First the start date, later the end date: ' )
+        check = [int(inputs) for inputs in dates]
+        get_items_sold_between(table, *check)
     except:
         ui.print_error_message("Value Error. Please provide a correct date format")
         get_items_sold_between_wrapper()
@@ -139,7 +139,7 @@ def remove(table, id_):
     """
 
     for row in table:
-        if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
+        if row[ID_INDEX] == id_[ID_INDEX]:
             table.remove(row)
     data_manager.write_table_to_file(FILE_NAME, table)
     return table
@@ -159,9 +159,9 @@ def update(table, id_):
 
     iterate = 0
     for row in table:
-        if row[ID_LIST_INDEX] == id_[ID_LIST_INDEX]:
+        if row[ID_INDEX] == id_[ID_INDEX]:
             updated_record = ui.get_inputs(['title: ', 'price: ', 'month: ', 'day: ', 'year: '], row)
-            updated_record.insert(ID_LIST_INDEX, id_[ID_LIST_INDEX])
+            updated_record.insert(ID_INDEX, id_[ID_INDEX])
             table[iterate] = updated_record
             data_manager.write_table_to_file(FILE_NAME, table)
             break
@@ -184,14 +184,14 @@ def get_lowest_price_item_id(table):
     Returns:
          string: id
     """
-    cheapest_price = min([row[GAME_PRICE_INDEX] for row in table])
+    cheapest_price = min([item[GAME_PRICE_INDEX] for item in table])
     dict_cheapest_products = {}
-    for row in table:
-        if row[GAME_PRICE_INDEX] == cheapest_price:
-            dict_cheapest_products[row[GAME_NAME_INDEX]] = [row[GAME_PRICE_INDEX]]
+    for items in table:
+        if item[GAME_PRICE_INDEX] == cheapest_price:
+            dict_cheapest_products[item[GAME_NAME_INDEX]] = [item[ID_INDEX]]
         else:
             pass
-    print(min(dict_cheapest_products, key = dict_cheapest_products.get))
+    print(max(dict_cheapest_products, key = dict_cheapest_products.get))
     # your code
 
 
